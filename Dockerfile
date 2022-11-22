@@ -8,4 +8,6 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
-CMD ["sh", "-c", "python query_bq.py"]
+ENV PORT 8080
+
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 query_bq:app

@@ -1,5 +1,8 @@
-
+from flask import Flask
 import pandas_gbq
+
+app = Flask(__name__)
+app.config["DEBUG"] = True #If the code is malformed, there will be an error shown when visit app
 
 project_id = 'snowflake-snowplow-217500'
 dataset = 'scratch'
@@ -11,5 +14,8 @@ sql = f"""
     FROM `{project_id}.{dataset}.{table}`
 """
 
-df = pandas_gbq.read_gbq(sql, project_id=project_id)
-print(df.head())
+@app.route('/', methods=['GET'])
+def ga4_to_sp_events():
+    print("Hi")
+    df = pandas_gbq.read_gbq(sql, project_id=project_id)
+    return f"Queried table! {print(df.head())}"
