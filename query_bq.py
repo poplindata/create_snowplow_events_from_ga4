@@ -16,6 +16,6 @@ sql = f"""
 
 @app.route('/', methods=['GET'])
 def ga4_to_sp_events():
-    print("Hi")
     df = pandas_gbq.read_gbq(sql, project_id=project_id)
-    return f"Queried table! {print(df.head())}"
+    five = 5
+    return f"Queried table! {five},{df.head()}"
