@@ -1,0 +1,10 @@
+{
+    "name": "Convert GA4 data to Snowplow events",
+    "env": {
+        "ga4_dataset": {
+            "description": "Dataset where GA4 is",
+            "value": "zzz",
+            "required": false
+        }
+    }
+}

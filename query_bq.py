@@ -1,5 +1,6 @@
 from flask import Flask
 import pandas_gbq
+import os
 
 app = Flask(__name__)
 app.config["DEBUG"] = True #If the code is malformed, there will be an error shown when visit app
@@ -39,5 +40,9 @@ def ga4_to_sp_events():
         {df.shape[0]}\n
         New table {destination_table} has been created.
     """
+
+@app.route('/os', methods=['GET'])
+def print_os():
+    return os.environ.get('ga4_dataset')
 
 
