@@ -7,7 +7,7 @@ app.config["DEBUG"] = True #If the code is malformed, there will be an error sho
 project_id = 'snowflake-snowplow-217500'
 dataset = 'analytics_341844832'
 table = 'events_*'
-
+destination_table = 'ga4_test.ga4_events'
 
 sql = f"""
     SELECT 
@@ -26,13 +26,18 @@ sql = f"""
     group by event_timestamp, event_name
 """
 
+@app.route('/', methods=['GET'])
+def greet():
+    return "Please add /translate_ga4_to_snowplow to the url to translate your GA4 data"
+
 @app.route('/translate_ga4_to_snowplow', methods=['GET'])
 def ga4_to_sp_events():
     df = pandas_gbq.read_gbq(sql, project_id=project_id)
-    pandas_gbq.to_gbq(dataframe=df, destination_table='ga4_test.ga4_events', project_id=project_id)
+    pandas_gbq.to_gbq(dataframe=df, destination_table=destination_table, project_id=project_id)
     return f"""
-        Queried table row count:\n 
-        {df.shape[0]}
-        New table has been created
+        Queried table row count from {dataset}.{table}:\n 
+        {df.shape[0]}\n
+        New table {destination_table} has been created.
     """
-    
+
+
