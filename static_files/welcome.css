@@ -1,0 +1,18 @@
+body {
+    background: rgb(246, 245, 243);
+    margin-top: 50px;
+    margin-left: 100px;
+    }
+h1 {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 2.5em;
+    color: rgb(89, 16, 145);
+    }
+h2 {
+    font-family: Georgia, serif;
+    font-size: 1.2em;
+    color: DarkSlateGray;
+    }
+code {
+    font-family: monospace;
+    }

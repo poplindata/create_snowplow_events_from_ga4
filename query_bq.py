@@ -2,7 +2,7 @@ from flask import Flask, render_template
 import pandas_gbq
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static_files')
 app.config["DEBUG"] = True
 
 project_id = 'snowflake-snowplow-217500'

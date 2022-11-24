@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href='/static_files/welcome.css' />
  <title>Welcome</title>
 </head>
 <body>
-<h1>Welcome to The GA4 to Snowplow event Converter!</h1>
-<h2>Please navigate to {current_url}/translate_ga4_to_snowplow to convert your GA4 data</h2>
+<h1>Welcome to The GA4 to Snowplow Event Converter!</h1>
+<h2>This converter takes your GA4 events data and creates an imitation Snowplow <code>atomic.events </code>table.</h2>
+<h2>Please navigate <code><a href="{{ url_for('ga4_to_sp_events') }}">here</a></code> to convert your GA4 data</h2>
 </body>
 </html>
