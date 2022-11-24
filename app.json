@@ -3,8 +3,17 @@
     "env": {
         "ga4_dataset": {
             "description": "Dataset where GA4 is",
-            "value": "zzz",
+            "value": "analytics_341844832",
             "required": false
+        },
+        "ga4_table": {
+            "description": "GA4 table (default is all tables)",
+            "value": "events_*",
+            "required": false
+        },
+        "destination_dataset_and_table": {
+            "description": "e.g. dataset.table",
+            "value": "ga4_to_snowplow.events"
         }
     }
 }
