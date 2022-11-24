@@ -12,7 +12,7 @@
             "required": false
         },
         "destination_dataset_and_table": {
-            "description": "e.g. dataset.table",
+            "description": "e.g. dataset.table - dataset must exist",
             "value": "ga4_to_snowplow.events"
         }
     }

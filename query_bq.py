@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import pandas_gbq
 import os
 
@@ -29,18 +29,17 @@ sql = f"""
 
 @app.route('/', methods=['GET'])
 def greet():
-    return "Please add /translate_ga4_to_snowplow to the url to translate your GA4 data"
+    return render_template('welcome.html')
+
 
 @app.route('/translate_ga4_to_snowplow', methods=['GET'])
 def ga4_to_sp_events():
     try:
         df = pandas_gbq.read_gbq(sql, project_id=project_id)
         pandas_gbq.to_gbq(dataframe=df, destination_table=destination_table, project_id=project_id, if_exists='replace')
-        return f"""
-            Queried table row count from {dataset}.{table}:\n 
-            {df.shape[0]}\n
-            New table {destination_table} has been created.
-        """
+        
+        return render_template('conversion_page.html', dataset=dataset, table=table, rows=df.shape[0], dest=destination_table)
+
     except Exception as e:
-        return f"ERROR: {e}"
+        return f"Whoops! ERROR: {e}"
 
