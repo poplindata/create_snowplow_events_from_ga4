@@ -5,6 +5,8 @@ WORKDIR /app
 
 COPY query_bq.py .
 COPY requirements.txt .
+COPY templates/ .
+COPY static_files/ .
 
 RUN pip install -r requirements.txt
 

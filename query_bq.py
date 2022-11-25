@@ -43,3 +43,5 @@ def ga4_to_sp_events():
     except Exception as e:
         return f"Whoops! ERROR: {e}"
 
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=105, debug=True)
