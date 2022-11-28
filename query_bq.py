@@ -2,7 +2,7 @@ from flask import Flask, render_template
 import pandas_gbq
 import os
 
-app = Flask(__name__, template_folder='templates', static_folder='static_files')
+app = Flask(__name__)
 app.config["DEBUG"] = True
 
 project_id = 'snowflake-snowplow-217500'
@@ -26,22 +26,20 @@ sql = f"""
     FROM `{project_id}.{dataset}.{table}`, unnest(event_params) as event_params
     group by event_timestamp, event_name
 """
-
 @app.route('/', methods=['GET'])
 def greet():
-    return render_template('welcome.html')
-
+    return "Please add /translate_ga4_to_snowplow to the url to translate your GA4 data"
 
 @app.route('/translate_ga4_to_snowplow', methods=['GET'])
 def ga4_to_sp_events():
     try:
         df = pandas_gbq.read_gbq(sql, project_id=project_id)
         pandas_gbq.to_gbq(dataframe=df, destination_table=destination_table, project_id=project_id, if_exists='replace')
-        
-        return render_template('conversion_page.html', dataset=dataset, table=table, rows=df.shape[0], dest=destination_table)
-
+        return f"""
+            Queried table row count from {dataset}.{table}:\n 
+            {df.shape[0]}\n
+            New table {destination_table} has been created.
+        """
     except Exception as e:
-        return f"Whoops! ERROR: {e}"
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=105, debug=True)
+        return f"ERROR: {e}"
+        
