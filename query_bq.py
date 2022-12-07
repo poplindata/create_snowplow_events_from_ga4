@@ -11,6 +11,14 @@ dataset = os.environ.get('ga4_dataset')
 table = os.environ.get('ga4_table')
 destination_table = os.environ.get('destination_dataset_and_table')
 
+"""
+source and destination as part of the map - source will be the col name in ga4, and dest is what it will be called. 
+value of the transformation insert as acolumn - transformation is the sql statement, ignore the input
+"""
+#use jinja?
+#assume mapping will have all column definitions
+
+
 sql = f"""WITH ga4_data AS (
     SELECT * FROM `{project_id}.{dataset}.{table}`
 ),
@@ -143,7 +151,7 @@ def ga4_to_sp_events():
     try:
         df = pandas_gbq.read_gbq(sql, project_id=project_id)
         pandas_gbq.to_gbq(dataframe=df, destination_table=destination_table, project_id=project_id, if_exists='replace')
-        
+        #just execute a bq query with bq api
         return render_template('conversion_page.html', dataset=dataset, table=table, rows=df.shape[0], dest=destination_table)
 
     except Exception as e:

@@ -1,2 +1,2 @@
-pandas-gbq
 Flask
+dbt-bigquery
