@@ -11,7 +11,7 @@ def extract_fields(item: dict):
         sql_fields.append(f"NULL AS {item['destination']},")
     return sql_fields
 
-def create_sql_query(ga4_table, output_filename):
+def create_sql_query(ga4_table, output_filename, output_table):
     cte_1 = []
     cte_2 = []
     for item in fields_1:
@@ -21,6 +21,7 @@ def create_sql_query(ga4_table, output_filename):
         cte_2.extend(extract_fields(item))
         
     with open(f"{output_filename}", 'w') as f:
+        f.write(f"CREATE OR REPLACE TABLE {output_table} AS (")
         f.write("WITH ga4_data AS (\n")
         f.write("SELECT *,\n")
         for field in cte_1:
@@ -35,7 +36,7 @@ def create_sql_query(ga4_table, output_filename):
     FROM ga4_data
     LEFT JOIN ga4_test.countries_0 c ON ga4_data.geo_country_name=c.name
     LEFT JOIN ga4_test.regions r ON ga4_data.geo_region_name=r.name AND SPLIT(r.code, '-')[SAFE_OFFSET(0)]=c.alpha2_code
-        """)
+    )    """)
 
 if __name__ == "__main__":
     create_sql_query("snowflake-snowplow-217500.analytics_341844832.events_*", "built_sql_query.sql")

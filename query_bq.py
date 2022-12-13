@@ -14,7 +14,6 @@ sql_query_output = "built_sql_query.sql"
 app = Flask(__name__, template_folder='templates', static_folder='static_files')
 app.config["DEBUG"] = True
 
-sql = create_sql_query(ga4_table=f"{project_id}.{dataset}.{table}", output_filename=sql_query_output)
 
 
 @app.route('/', methods=['GET'])
@@ -26,9 +25,15 @@ def greet():
 def ga4_to_sp_events():
     try:
         client = bigquery.Client()
+        create_sql_query(ga4_table=f"{project_id}.{dataset}.{table}", 
+            output_filename=sql_query_output,
+            output_table=destination_table)
         try:
+            with open(sql_query_output, 'r') as f:
+                sql = f.read()
+                print(sql)
             query_job = client.query(sql)
-
+            
         except BadRequest as e:
             for e in query_job.errors:
                 print(e['message'])
