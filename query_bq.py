@@ -7,7 +7,7 @@ import os
 project_id = 'snowflake-snowplow-217500'
 dataset = os.environ.get('ga4_dataset')
 table = os.environ.get('ga4_table')
-destination_table = os.environ.get('destination_dataset_and_table')
+destination_table = "ga4_to_snowplow.ga4_events" #os.environ.get('destination_dataset_and_table')
 sql_query_output = "built_sql_query.sql"
 
 
@@ -37,6 +37,8 @@ def ga4_to_sp_events():
         except BadRequest as e:
             for e in query_job.errors:
                 print(e['message'])
+        except Exception as f:
+            print(f)
         return render_template('conversion_page.html', dataset=dataset, table=table, dest=destination_table)
 
     except Exception as e:
