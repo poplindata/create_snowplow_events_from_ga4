@@ -93,27 +93,27 @@ fields_1 = [
 
 fields_2 = [
     {
-        "source": "null",
+        "source": "",
         "destination": "app_id",
         "transform": "CASE WHEN stream_id = '4271243942' THEN 'Poplin' ELSE NULL END"
     },
     {
         "source": "platform",
         "destination": "platform",
-        "transform": "null"
+        "transform": ""
     },
     {
-        "source": "null",
+        "source": "",
         "destination": "etl_tstamp",
         "transform": "TIMESTAMP_MICROS(event_timestamp)"
     },
     {
-        "source": "null",
+        "source": "",
         "destination": "collector_tstamp",
         "transform": "TIMESTAMP_MICROS(event_timestamp)",
     },
     {
-        "source": "null",
+        "source": "",
         "destination": "dvce_created_tstamp",
         "transform": "TIMESTAMP_MICROS(event_timestamp)",
     },
@@ -130,22 +130,22 @@ fields_2 = [
     {
         "source": "",
         "destination": "name_tracker",
-        "transform": "google-analytics-4",
+        "transform": "'google-analytics-4'",
     },
     {
         "source": "",
         "destination": "v_tracker",
-        "transform": "1.0.0",
+        "transform": "'1.0.0'",
     },
     {
         "source": "",
         "destination": "v_collector",
-        "transform": "collector-version",
+        "transform": "'collector-version'",
     },
     {
         "source": "",
         "destination": "v_etl",
-        "transform": "enrich-version",
+        "transform": "'enrich-version'",
     },
     {
         "source": "user_id",
@@ -156,6 +156,11 @@ fields_2 = [
         "source": "",
         "destination": "domain_userid",
         "transform": "md5(user_pseudo_id)",
+    },
+    {
+        "source": "domain_sessionidx",
+        "destination": "domain_sessionidx",
+        "transform": "",
     },
     {
         "source": "",
@@ -348,9 +353,9 @@ fields_2 = [
         "transform": "",
     },
     {
-        "source": "null",
+        "source": "",
         "destination": "br_family",
-        "transform": "null",
+        "transform": "",
     },
     {
         "source": "device.browser_version",
@@ -364,24 +369,97 @@ fields_2 = [
     },
     {
         "source": "",
-        "destination": "",
+        "destination": "br_viewwidth",
         "transform": "",
     },
     {
         "source": "",
-        "destination": "",
+        "destination": "br_viewheight",
+        "transform": "",
+    },
+    {
+        "source": "device.operating_system",
+        "destination": "os_name",
         "transform": "",
     },
     {
         "source": "",
-        "destination": "",
+        "destination": "os_family",
         "transform": "",
     },
     {
         "source": "",
-        "destination": "",
+        "destination": "os_manufacturer",
         "transform": "",
     },
-
-
+    {
+        "source": "",
+        "destination": "os_timezone",
+        "transform": "TIMESTAMP_MICROS(event_timestamp)",
+    },
+    {
+        "source": "",
+        "destination": "mkt_clickid",
+        "transform": "COALESCE(regexp_extract(page_url, r'gclid=([^&]*)'), regexp_extract(page_url, r'msclkid=([^&]*)'), regexp_extract(page_url, r'dclid=([^&]*)'))",
+    },
+    {
+        "source": "device.category",
+        "destination": "dvce_type",
+        "transform": "",
+    },
+    {
+        "source": "",
+        "destination": "dvce_ismobile",
+        "transform": "IF(device.category = 'mobile', 1, 0)",
+    },
+    {
+        "source": "",
+        "destination": "dvce_sent_tstamp",
+        "transform": "TIMESTAMP_MICROS(event_timestamp)",
+    },
+    {
+        "source": "domain_sessionid",
+        "destination": "domain_sessionid",
+        "transform": "",
+    },
+    {
+        "source": "",
+        "destination": "derived_tstamp",
+        "transform": "TIMESTAMP_MICROS(event_timestamp)",
+    },
+    {
+        "source": "",
+        "destination": "event_vendor",
+        "transform": "'com.googleanalytics'",
+    },
+    {
+        "source": "event_name",
+        "destination": "event_name",
+        "transform": "",
+    },
+    {
+        "source": "",
+        "destination": "event_format",
+        "transform": "'jsonschema'",
+    },
+    {
+        "source": "",
+        "destination": "event_version",
+        "transform": "'1-0-0'",
+    },
+    {
+        "source": "",
+        "destination": "event_fingerprint",
+        "transform": "MD5(TO_JSON_STRING(ga4_data))",
+    },
+    {
+        "source": "",
+        "destination": "load_tstamp",
+        "transform": "current_timestamp()",
+    }, 
+    {
+        "source": "",
+        "destination": "mkt_network",
+        "transform": "CASE WHEN page_url LIKE '%gclid=%' THEN 'Google' WHEN page_url LIKE '%msclkid=%' THEN 'Microsoft' WHEN page_url LIKE '%dclid=%' THEN 'DoubleClick' END",
+    }
 ]
