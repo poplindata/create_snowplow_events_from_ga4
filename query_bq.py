@@ -25,21 +25,25 @@ def greet():
 def ga4_to_sp_events():
     try:
         client = bigquery.Client()
-        create_sql_query(ga4_table=f"{project_id}.{dataset}.{table}", 
+        create_sql_query(ga4_table=f"{project_id}.{dataset}.events_*", 
             output_filename=sql_query_output,
-            output_table=destination_table)
+            output_table=destination_table,
+            start_date=start_date,
+            end_date=end_date)
         try:
             with open(sql_query_output, 'r') as f:
                 sql = f.read()
                 print(sql)
             query_job = client.query(sql)
             
-        except BadRequest as e:
-            for e in query_job.errors:
-                print(e['message'])
+        except BadRequest as br:
+            for br in query_job.errors:
+                print(br['message'])
         except Exception as f:
             print(f)
-        return render_template('conversion_page.html', dataset=dataset, table=table, dest=destination_table)
+
+        return render_template('conversion_page.html', dataset=dataset, start_date=start_date, end_date=end_date, dest=destination_table)
+
 
     except Exception as e:
         return f"Whoops! ERROR: {e}"

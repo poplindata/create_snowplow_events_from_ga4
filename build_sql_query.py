@@ -11,7 +11,7 @@ def extract_fields(item: dict):
         sql_fields.append(f"NULL AS {item['destination']},")
     return sql_fields
 
-def create_sql_query(ga4_table, output_filename, output_table):
+def create_sql_query(ga4_table,output_filename, output_table, start_date=None, end_date=None ):
     cte_1 = []
     cte_2 = []
     for item in fields_1:
@@ -28,8 +28,14 @@ def create_sql_query(ga4_table, output_filename, output_table):
             f.writelines({f"{field}\n"})
         f.writelines(f"""
     FROM `{ga4_table}`
-    )
-    SELECT\n""")
+    """)
+        if start_date and end_date:
+            f.writelines(f"""
+            WHERE _TABLE_SUFFIX BETWEEN '{start_date}' AND '{end_date}'
+            """)
+        f.writelines(f"""
+        )
+        SELECT\n""")
         for field in cte_2:
             f.writelines({f"{field}\n"})
         f.writelines(f"""
@@ -39,4 +45,4 @@ def create_sql_query(ga4_table, output_filename, output_table):
     )    """)
 
 if __name__ == "__main__":
-    create_sql_query("snowflake-snowplow-217500.analytics_341844832.events_*", "built_sql_query.sql")
+    create_sql_query("snowflake-snowplow-217500.analytics_341844832.events_*", "built_sql_query.sql", "ga4_to_snowplow.ga4_events", start_date='20221201', end_date='20221213')

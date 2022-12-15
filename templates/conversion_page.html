@@ -6,7 +6,9 @@
 </head>
 <body>
 <h2>Converted data successfully!</h2>
-<h3>Your GA4 events have been queried from <code>{{dataset}}.{{table}}</code> and converted to Snowplow event data. The table <code>{{dest}}</code> has been created.</h3>
+<h3>Your GA4 events have been queried from <code>{{dataset}}.events_*</code>.</h3> 
+{% if end_date and start_date %}<h3>Events between {{start_date}} and {{end_date}} have been selected.</h3>{% endif %} 
+<h3>These GA4 events have been converted to Snowplow event data - the table <code>{{dest}}</code> has been created.</h3>
 
 </body>
 </html>
