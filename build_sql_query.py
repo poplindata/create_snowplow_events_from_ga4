@@ -16,11 +16,30 @@ def create_sql_query(ga4_table,output_filename, output_table, start_date=None, e
     cte_2 = []
     for item in fields_1:
         cte_1.extend(extract_fields(item))
+        cte_2.append(f"{item['destination']},") #Ensure each of the transformed fields is selected in the main query
 
     for item in fields_2:
         cte_2.extend(extract_fields(item))
         
     with open(f"{output_filename}", 'w') as f:
+        f.writelines("""
+        CREATE TEMP FUNCTION sensible(event_params ARRAY<STRUCT<key STRING, value STRUCT<string_value STRING, int_value INT64, double_value FLOAT64, float_value FLOAT64>>>)
+        RETURNS STRING
+        LANGUAGE js
+        AS r\"""
+        function Clean(event_params){
+            r = {}
+            for (i=0;i<event_params.length;i++){
+                o = event_params[i];
+                k = o['key'];
+                value = parseInt(o['value']['int_value']) ?? parseFloat(o['value']['double_value']) ?? o['value']['string_value']
+                r[k] = value
+            }
+            return JSON.stringify(r);
+        }
+        return Clean(event_params)
+            \""";\n
+        """)
         f.write(f"CREATE OR REPLACE TABLE {output_table} AS (")
         f.write("WITH ga4_data AS (\n")
         f.write("SELECT *,\n")

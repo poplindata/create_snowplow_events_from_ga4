@@ -2,47 +2,47 @@ fields_1 = [
     {
         "source": "",
         "destination": "domain_sessionidx",
-        "transform": "(select value.int_value from unnest(event_params) where key = 'ga_session_number')",
+        "transform": "JSON_QUERY(sensible(event_params), '$.ga_session_number')",
     },
     {
         "source": "",
         "destination": "page_url",
-        "transform": "(select value.string_value from unnest(event_params) where key = 'page_location')",
+        "transform": "JSON_QUERY(sensible(event_params), '$.page_location')",
     },
     {
         "source": "",
         "destination": "page_title",
-        "transform": "(select value.string_value from unnest(event_params) where key = 'page_title')",
+        "transform": "JSON_QUERY(sensible(event_params), '$.page_title')",
     },
     {
         "source": "",
         "destination": "page_referrer",
-        "transform": "(select value.string_value from unnest(event_params) where key = 'page_referrer')",
+        "transform": "JSON_QUERY(sensible(event_params), '$.page_referrer')",
     },
     {
         "source": "",
         "destination": "mkt_medium",
-        "transform": "(select value.string_value from unnest(event_params) where key = 'medium')",
+        "transform": "JSON_QUERY(sensible(event_params), '$.medium')",
     },
     {
         "source": "",
         "destination": "mkt_source",
-        "transform": "(select value.string_value from unnest(event_params) where key = 'source')",
+        "transform": "JSON_QUERY(sensible(event_params), '$.source')",
     },
     {
         "source": "",
         "destination": "mkt_term",
-        "transform": "(select value.string_value from unnest(event_params) where key = 'term')",
+        "transform": "JSON_QUERY(sensible(event_params), '$.term')",
     },
     {
         "source": "",
         "destination": "mkt_content",
-        "transform": "(select value.string_value from unnest(event_params) where key = 'content')",
+        "transform": "JSON_QUERY(sensible(event_params), '$.content')",
     },
     {
         "source": "",
         "destination": "mkt_campaign",
-        "transform": "(select value.string_value from unnest(event_params) where key = 'campaign')",
+        "transform": "JSON_QUERY(sensible(event_params), '$.campaign')",
     },
     {
         "source": "",
@@ -77,7 +77,7 @@ fields_1 = [
     {
         "source": "",
         "destination": "domain_sessionid",
-        "transform": "(select value.int_value from unnest(event_params) where key = 'ga_session_id')",
+        "transform": "JSON_QUERY(sensible(event_params), '$.ga_session_id')",
     },
     {
         "source": "geo.country",
@@ -158,11 +158,6 @@ fields_2 = [
         "transform": "md5(user_pseudo_id)",
     },
     {
-        "source": "domain_sessionidx",
-        "destination": "domain_sessionidx",
-        "transform": "",
-    },
-    {
         "source": "",
         "destination": "geo_country",
         "transform": "c.alpha2_code",
@@ -175,26 +170,6 @@ fields_2 = [
     {
         "source": "geo.city",
         "destination": "geo_city",
-        "transform": "",
-    },
-    {
-        "source": "geo_region_name",
-        "destination": "geo_region_name",
-        "transform": "",
-    },
-    {
-        "source": "page_url",
-        "destination": "page_url",
-        "transform": "",
-    },
-    {
-        "source": "page_title",
-        "destination": "page_title",
-        "transform": "",
-    },
-    {
-        "source": "page_referrer",
-        "destination": "page_referrer",
         "transform": "",
     },
     {
@@ -273,38 +248,8 @@ fields_2 = [
         "transform": "regexp_extract(page_referrer, r'utm_term=([^&]*)')",
     },
     {
-        "source": "mkt_medium",
-        "destination": "mkt_medium",
-        "transform": "",
-    },
-    {
-        "source": "mkt_source",
-        "destination": "mkt_source",
-        "transform": "",
-    },
-    {
-        "source": "mkt_term",
-        "destination": "mkt_term",
-        "transform": "",
-    },
-    {
-        "source": "mkt_content",
-        "destination": "mkt_content",
-        "transform": "",
-    },
-    {
-        "source": "mkt_campaign",
-        "destination": "mkt_campaign",
-        "transform": "",
-    },
-    {
         "source": "ecommerce.transaction_id",
         "destination": "tr_orderid",
-        "transform": "",
-    },
-    {
-        "source": "tr_affiliation",
-        "destination": "tr_affiliation",
         "transform": "",
     },
     {
@@ -320,31 +265,6 @@ fields_2 = [
     {
         "source": "ecommerce.shipping_value",
         "destination": "tr_shipping",
-        "transform": "",
-    },
-    {
-        "source": "ti_sku",
-        "destination": "ti_sku",
-        "transform": "",
-    },
-    {
-        "source": "ti_name",
-        "destination": "ti_name",
-        "transform": "",
-    },
-    {
-        "source": "ti_category",
-        "destination": "ti_category",
-        "transform": "",
-    },
-    {
-        "source": "ti_price",
-        "destination": "ti_price",
-        "transform": "",
-    },
-    {
-        "source": "ti_quantity",
-        "destination": "ti_quantity",
         "transform": "",
     },
     {
@@ -416,11 +336,6 @@ fields_2 = [
         "source": "",
         "destination": "dvce_sent_tstamp",
         "transform": "TIMESTAMP_MICROS(event_timestamp)",
-    },
-    {
-        "source": "domain_sessionid",
-        "destination": "domain_sessionid",
-        "transform": "",
     },
     {
         "source": "",
