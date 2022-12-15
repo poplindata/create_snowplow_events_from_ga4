@@ -6,15 +6,15 @@ import os
 
 project_id = 'snowflake-snowplow-217500'
 dataset = os.environ.get('ga4_dataset')
-table = os.environ.get('ga4_table')
-destination_table = "ga4_to_snowplow.ga4_events" #os.environ.get('destination_dataset_and_table')
+start_date = os.environ.get('start_date')
+end_date = os.environ.get('end_date')
+destination_table = os.environ.get('destination_dataset_and_table')
 sql_query_output = "built_sql_query.sql"
 
 
 app = Flask(__name__, template_folder='templates', static_folder='static_files')
 app.config["DEBUG"] = True
-
-
+print(dataset,start_date,end_date,destination_table)
 
 @app.route('/', methods=['GET'])
 def greet():
