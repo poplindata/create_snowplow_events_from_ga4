@@ -16,12 +16,12 @@
             "value": "ga4_to_snowplow.ga4_events"
         },
         "start_date": {
-            "description": "Date you want to query events from, in format 20220101",
+            "description": "Date you want to query events from, in format 20220101. Leave blank to query whole table",
             "value": "",
             "required": false
         },
         "end_date": {
-            "description": "Date you want to query events until, in format 20220101",
+            "description": "Date you want to query events until, in format 20220101. Leave blank to query whole table",
             "value": "",
             "required": false
         }
