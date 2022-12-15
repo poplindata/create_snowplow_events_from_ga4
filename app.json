@@ -13,7 +13,15 @@
         },
         "destination_dataset_and_table": {
             "description": "e.g. dataset.table - dataset must exist",
-            "value": "ga4_to_snowplow.events"
+            "value": "ga4_to_snowplow.ga4_events"
+        },
+        "start_date": {
+            "description": "Date you want to query events from, in format 20220101",
+            "required": false
+        },
+        "end_date": {
+            "description": "Date you want to query events until, in format 20220101",
+            "required": false
         }
     }
 }
