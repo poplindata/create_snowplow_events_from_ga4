@@ -14,7 +14,7 @@ sql_query_output = "built_sql_query.sql"
 
 app = Flask(__name__, template_folder='templates', static_folder='static_files')
 app.config["DEBUG"] = True
-print(dataset,start_date,end_date,destination_table)
+
 
 @app.route('/', methods=['GET'])
 def greet():

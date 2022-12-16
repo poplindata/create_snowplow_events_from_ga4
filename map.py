@@ -46,36 +46,6 @@ fields_1 = [
     },
     {
         "source": "",
-        "destination": "tr_affiliation",
-        "transform": "(select affiliation from unnest(items))",
-    },
-    {
-        "source": "",
-        "destination": "ti_sku",
-        "transform": "(select item_id from unnest(items))",
-    },
-    {
-        "source": "",
-        "destination": "ti_name",
-        "transform": "(select item_name from unnest(items))",
-    },
-    {
-        "source": "",
-        "destination": "ti_category",
-        "transform": "(select item_category from unnest(items))",
-    },
-    {
-        "source": "",
-        "destination": "ti_price",
-        "transform": "(select price from unnest(items))",
-    },
-    {
-        "source": "",
-        "destination": "ti_quantity",
-        "transform": "(select quantity from unnest(items))",
-    },
-    {
-        "source": "",
         "destination": "domain_sessionid",
         "transform": "JSON_QUERY(sensible(event_params), '$.ga_session_id')",
     },
@@ -92,6 +62,11 @@ fields_1 = [
 ]
 
 fields_2 = [
+    {
+        "source": "items",
+        "destination": "items",
+        "transform": ""
+    },
     {
         "source": "",
         "destination": "app_id",
